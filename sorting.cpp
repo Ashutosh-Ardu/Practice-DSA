@@ -6,7 +6,7 @@ void swap(int &a,int &b){
 	int t=a;a=b;b=t;
 }
 
-void sort(int *ar,int n){
+void bucketSort(int *ar,int n){
 	for(int i=0;i<n;i++){
 		for(int j=0;j<n-i-1;j++){
 			if(ar[j] > ar[j+1])
@@ -32,6 +32,6 @@ int main(){
 		ar[i] = rand() % 1000;
 
 	print(ar,n);
-	sort(ar,n);
+	bucketSort(ar,n);
 	print(ar,n);
 }
