@@ -28,6 +28,18 @@ void insertionSort(int *ar,int n){
 	}
 }
 
+void selectionSort(int *ar,int n){
+	int min;
+	for(int i=0;i<n-1;i++){
+		min = i;
+		for(int j=i+1;j<n;j++){
+			if(ar[j] < ar[min])
+				min = j;
+		}
+		swap(ar[i],ar[min]);
+	}
+}
+
 void print(int *ar,int n){
 	for(int i=0;i<n;i++)
 		cout<<ar[i]<<" ";
