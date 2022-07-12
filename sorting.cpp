@@ -15,6 +15,19 @@ void bucketSort(int *ar,int n){
 	}
 }
 
+void insertionSort(int *ar,int n){
+	int j,key;
+	for(int i=1;i<n;i++){
+		j = i - 1;
+		key = ar[i];
+		while(j >= 0 && ar[j] > key){
+			ar[j + 1] = ar[j];
+			j--;
+		}
+		ar[j] = key;
+	}
+}
+
 void print(int *ar,int n){
 	for(int i=0;i<n;i++)
 		cout<<ar[i]<<" ";
