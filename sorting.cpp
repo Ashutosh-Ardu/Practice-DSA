@@ -73,6 +73,76 @@ void mergeSort(int *ar,int start,int end){
 	}
 }
 
+//first element as the pivot 
+int pivot1(int *ar,int start,int end){
+	int p = ar[start],i = start,j = end;
+
+	while(i < j){
+		while(i <= end && ar[i] <= p)
+			i++;
+		while(j >= start && ar[j] > p)
+			j--;
+
+		if(i < j)
+			swap(ar[i],ar[j]);
+	}
+	swap(ar[start],ar[j]);
+	return j;
+}
+
+//last element as the pivot 
+int pivot2(int *ar,int start,int end){
+	int p = ar[end],i = start,j = end;
+
+	while(i < j){
+		while(i <= end && ar[i] < p)
+			i++;
+		while(j >= start && ar[j] >= p)
+			j--;
+
+		if(i < j)
+			swap(ar[i],ar[j]);
+	}
+	swap(ar[start],ar[i]);
+	return i;
+}
+
+void quickSort1(int *ar,int start,int end){
+	if(start < end){
+		int p = pivot1(ar,start,end);// pivot2 can also be used here
+		quickSort1(ar,start,p-1);
+		quickSort1(ar,p+1,end);
+	}
+}
+
+int pivot3(int *ar,int start,int end){
+	int mid = (start + end) / 2;
+	int p = ar[mid],i = start,j = end;
+
+	while(i <= j){
+		if(ar[i] < p)
+			i++;
+		else if(ar[j] > p)
+			j--;
+		else{
+			swap(ar[i],ar[j]);
+			i++;j--;
+		}
+	}
+	return i;
+}
+
+void quickSort2(int *ar,int start,int end){
+	if(start < end){
+		int p = pivot3(ar,start,end);
+
+		if(start < p - 1)
+			quickSort2(ar,start,p-1);
+		if(p < end)
+			quickSort2(ar,p,end);
+	}
+}
+
 void print(int *ar,int n){
 	for(int i=0;i<n;i++)
 		cout<<ar[i]<<" ";
@@ -94,5 +164,6 @@ int main(){
 	// insertionSort(ar,n);
 	// selectionSort(ar,n);
 	// mergeSort(ar,0,n-1);
+	// quickSort2(ar,0,n-1);
 	print(ar,n);
 }
