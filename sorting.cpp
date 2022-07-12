@@ -93,6 +93,6 @@ int main(){
 	// bubbleSort(ar,n);
 	// insertionSort(ar,n);
 	// selectionSort(ar,n);
-	mergeSort(ar,0,n-1);
+	// mergeSort(ar,0,n-1);
 	print(ar,n);
 }
