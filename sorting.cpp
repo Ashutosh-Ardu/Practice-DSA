@@ -1,5 +1,6 @@
 #include "iostream"
 #include "time.h"
+#include "algorithm"
 using namespace std;
 
 void swap(int &a,int &b){
@@ -143,6 +144,128 @@ void quickSort2(int *ar,int start,int end){
 	}
 }
 
+int getMax(int *ar,int n){
+	int out = ar[0];
+	for(int i=1;i<n;i++)
+		if(ar[i] > out)
+			out = ar[i];
+	return out;
+}
+
+void digitSort(int *ar,int exp,int n){
+	int output[n];
+	int count[10] = {0};
+
+	for(int i=0;i<n;i++)
+		count[(ar[i]/exp)%10]++;
+
+	for(int i=1;i<10;i++)
+		count[i] += count[i-1];
+
+	for(int i=n-1;i>=0;i--){
+		output[(count[(ar[i]/exp%10)])-1] = ar[i];
+		count[(ar[i]/exp)%10]--;
+	}
+
+	for(int i=0;i<n;i++)
+		ar[i] = output[i];
+}
+
+void radixSort(int *ar,int n){
+	int max = getMax(ar,n);
+
+	for(int i=1;max/i>0;i*=10)
+		digitSort(ar,i,n);
+}
+
+void countSort(int *ar,int n){
+	// assume all the numbers in the array are <= 1000
+	int output[n];
+	int count[1000] = {0};
+
+	for(int i=0;i<n;i++)
+		count[ar[i]]++;
+
+	for(int i=1;i<1000;i++)
+		count[i] += count[i-1];
+
+	for(int i=0;i<n;i++){
+		output[(count[ar[i]])-1] = ar[i];
+		count[ar[i]]--;
+	}
+
+	for(int i=0;i<n;i++)
+		ar[i] = output[i];
+}
+
+void heapifyTB(int *ar,int index,int n){
+	int left = index * 2 + 1;
+	int right = index * 2 + 2;
+	int max = index;
+
+	if(left < n && ar[left] > ar[max])
+		max = left;
+
+	if(right < n && ar[right] > ar[max])
+		max = right;
+
+	if(max != index){
+		swap(ar[max],ar[index]);
+		heapifyTB(ar,max,n);
+	}
+}
+
+void heapSort(int *ar,int n){
+	// first converting the array into a max heap
+	for(int i=n/2-1;i>=0;i--)
+		heapifyTB(ar,i,n);
+
+
+	for(int i=n-1;i>=0;i--){
+		swap(ar[0],ar[i]);
+		heapifyTB(ar,0,i);
+	}
+}
+
+struct bucket{
+	int ar[30]; // the max capacity is 30 for now
+	int n;
+};
+
+void bucketSort(int *ar,int n){
+	bucket b[10];
+
+	for(int i=0;i<10;i++)
+		b[i].n = 0;
+
+	int k;
+	for(int i=0;i<n;i++){
+		k = ar[i] / 100;
+		b[k].ar[b[k].n] = ar[i];
+		b[k].n += 1;
+	}
+
+	int index = 0;
+	for(int i=0;i<10;i++){
+		sort(b[i].ar,b[i].ar + b[i].n);
+
+		for(int j=0;j<b[i].n;j++)
+			ar[index++] = b[i].ar[j];
+	}
+}
+
+void shellSort(int *ar,int n){
+	for(int gap=n/2;gap>0;gap/=2){
+		for(int i=gap;i<n;i++){
+			int key,j;
+			key = ar[i];
+			for(j=i;j>=gap && ar[j-gap] > key;j-=gap)
+				ar[j] = ar[j-gap];
+			ar[j] = key;
+		}
+	}
+}
+
 void print(int *ar,int n){
 	for(int i=0;i<n;i++)
 		cout<<ar[i]<<" ";
@@ -165,5 +288,10 @@ int main(){
 	// selectionSort(ar,n);
 	// mergeSort(ar,0,n-1);
 	// quickSort2(ar,0,n-1);
+	// radixSort(ar,n);
+	// countSort(ar,n);
+	// heapSort(ar,n);
+	bucketSort(ar,n);
+	// shellSort(ar,n);
 	print(ar,n);
 }
