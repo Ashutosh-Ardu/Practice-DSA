@@ -291,7 +291,7 @@ int main(){
 	// radixSort(ar,n);
 	// countSort(ar,n);
 	// heapSort(ar,n);
-	// bucketSort(ar,n);
+	bucketSort(ar,n);
 	// shellSort(ar,n);
 	print(ar,n);
 }
