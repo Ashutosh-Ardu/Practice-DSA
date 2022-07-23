@@ -2,6 +2,34 @@ import java.util.Scanner;
 
 class BSearch{
 
+  static int pivot(int[] ar,int start,int end){
+    int mid = (start+end)/2,i = start,j=end;
+    int p = ar[mid];
+
+    while(i<=j){
+      if(ar[i] < p)
+        i++;
+      else if(ar[j] > p)
+        j--;
+      else{
+        int t=ar[i];ar[i]=ar[j];ar[j]=t;
+        i++;j--;
+      }
+    }
+    return i;
+  }
+
+  static void quickSort(int[] ar,int start,int end){
+    if(start < end){
+      int p = pivot(ar,start,end);
+
+      if(start < p-1)
+        quickSort(ar,start,p-1);
+      if(p < end)
+        quickSort(ar,p,end);
+    }
+  }
+
   static void linearSearch(int[] ar,int val,int n){
     for(int i=0;i<n;i++){
       if(ar[i] == val){
@@ -57,10 +85,11 @@ class BSearch{
     for(int i=0;i<n;i++)
       ar[i] = (int) (Math.random() * 1001);
     
-    sort(ar,n);
-    show(ar,n);
+    // sort(ar,n);
+    quickSort(ar,0,n-1);
+    // show(ar,n);
     int val = in.nextInt();
     // binarySearch(ar,val,n);
-    linearSearch(ar,val,n);
+    // linearSearch(ar,val,n);
   }
 }
