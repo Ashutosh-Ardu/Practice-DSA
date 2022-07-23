@@ -2,6 +2,16 @@ import java.util.Scanner;
 
 class BSearch{
 
+  static void linearSearch(int[] ar,int val,int n){
+    for(int i=0;i<n;i++){
+      if(ar[i] == val){
+        System.out.println("Found");
+        return;
+      }
+    }
+    System.out.println("Not Found");
+  }
+
   static void binarySearch(int[] ar,int val,int n){
     int i = 0,j = n-1;
     int mid;
@@ -50,6 +60,7 @@ class BSearch{
     sort(ar,n);
     show(ar,n);
     int val = in.nextInt();
-    binarySearch(ar,val,n);
+    // binarySearch(ar,val,n);
+    linearSearch(ar,val,n);
   }
 }
